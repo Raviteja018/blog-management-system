@@ -1,8 +1,14 @@
 import Link from "next/link";
-import React from "react";
-import { Button } from "../ui/button";
 
-export default function Navbar() {
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import UserActions from "./UserActions";
+
+export default async function Navbar() {
+
+  const {getUser} = getKindeServerSession();
+
+  const user = await getUser()
+
   return (
     <nav className="py-5 flex justify-between items-center">
       <div className="flex items-center gap-6">
@@ -28,10 +34,15 @@ export default function Navbar() {
           </Link>
         </div>
       </div>
-      <div className="flex items-center gap-4">
-        <Button>Login</Button>
-        <Button variant="secondary">Sign up</Button>
-      </div>
+      <UserActions user={user}/>
     </nav>
   );
 }
+
+
+
+
+
+
+
+
